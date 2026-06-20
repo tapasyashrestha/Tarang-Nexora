@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { AlertTriangle, Info, ArrowRight } from "lucide-react";
 
 interface InsightCardProps {
@@ -40,10 +41,10 @@ export function InsightCard({ severity, headline, why, chain, mitigation, isLoop
         ) : (
           <div className="flex items-center gap-2 text-sm font-mono text-[rgba(255,255,255,0.8)] whitespace-nowrap">
             {chain.map((step, idx) => (
-              <React.Fragment key={idx}>
+              <Fragment key={idx}>
                 <span className="px-2 py-1 bg-[rgba(255,255,255,0.05)] rounded border border-[rgba(255,255,255,0.02)]">{step}</span>
                 {idx < chain.length - 1 && <ArrowRight className="w-4 h-4 text-primary shrink-0" />}
-              </React.Fragment>
+              </Fragment>
             ))}
           </div>
         )}

@@ -1,0 +1,174 @@
+Build a 4-screen frontend prototype for "Tarang" — a strategic foresight 
+and consequence-modeling engine for e-commerce businesses. This is a UI 
+PROTOTYPE for a hackathon submission — the deliverable is polished, 
+screenshot-ready screens, NOT a working causal-inference or ML backend. 
+Use realistic mock/static data styled to look like it's derived from real 
+e-commerce data (Brazilian Olist-style marketplace variables), NO real 
+backend, NO real model training, NO real database. Simulate all 
+"AI/model" behavior with timed loading states and pre-written mock 
+results — setTimeout-based fake "running simulation" states are expected 
+and encouraged for demo realism.
+
+TECH STACK
+- React 18 + TypeScript + Vite
+- Tailwind CSS for styling
+- React Router for navigation between the 4 screens
+- lucide-react for icons
+- Recharts for all charts/graphs (line charts, bar charts)
+- D3.js for the dependency network graph (force-directed node-link diagram)
+- Framer Motion for transitions (node highlighting, ripple propagation 
+  animation, panel reveals)
+- All data in a single mockData.ts file — no API calls, no real backend
+
+BRAND / VISUAL DIRECTION
+- Name: "Tarang" (Hindi for "ripple/wave" — reflects ripple-effect 
+  modeling). Tagline: "See every ripple before you make the wave."
+- Tone: serious analytical B2B/enterprise tool — think Bloomberg terminal 
+  or a modern data-science dashboard, NOT playful, NOT consumer-app-cute. 
+  Dense, confident, data-forward.
+- Color palette: dark mode primary — near-black background (#0A0E14), 
+  electric blue/cyan accent for primary data and active nodes (#3B9EFF), 
+  amber/orange for warnings and negative-impact signals (#F5A623), red 
+  for critical/high-risk flags (#E5484D), green for positive impact 
+  (#2DD4A7), light gray/white text on dark surfaces, subtle grid-line 
+  background texture to reinforce "systems/network" feel.
+- Typography: Inter or IBM Plex Sans for UI text, JetBrains Mono or 
+  similar monospace font for numeric data values/metrics (reinforces 
+  analytical precision).
+- Card-based layout with subtle borders (1px, low-opacity), generous 
+  padding, sharp-ish corners (4-6px, NOT heavily rounded — this is an 
+  analytical tool, not a consumer app).
+- Desktop-first responsive layout (this is a decision-maker's tool, 
+  primarily used on laptop/desktop) — design at 1440px width primarily, 
+  should degrade reasonably on tablet, mobile is secondary priority.
+
+SCREEN 1 — DEPENDENCY MAP (landing/core screen)
+- Top header bar: Tarang logo, a dropdown labeled "Business Model: 
+  E-Commerce Marketplace" (visual only), and a "Run New Simulation" 
+  primary button (top right)
+- Main canvas: a force-directed network graph (D3.js) showing these 
+  nodes, sized proportionally to their typical influence/connectivity, 
+  positioned in a loosely clustered layout:
+  - Central/high-connectivity nodes: "Product Price", "Delivery Time", 
+    "Marketing Spend"
+  - Mid-tier nodes: "Customer Ratings", "Order Volume", "Inventory 
+    Levels", "Cart Abandonment Rate", "Seller Performance Score"
+  - Outer/downstream nodes: "Customer Lifetime Value", "Return Rate", 
+    "Repeat Purchase Rate", "Platform Revenue"
+  - Connect nodes with directional edges (arrows) representing causal 
+    influence, with edge thickness varying to suggest strength of 
+    relationship (e.g. "Delivery Time" → "Customer Ratings" should be a 
+    thick edge; "Marketing Spend" → "Return Rate" should be thin/dashed)
+  - Color-code edges: cyan for positive/reinforcing relationships, amber 
+    for negative/inverse relationships
+  - Nodes should be draggable and the graph should respond with subtle 
+    physics (springy repositioning) — pure visual/interactive polish, no 
+    real computation needed
+- Right sidebar panel (collapsed by default, expands on node click): 
+  clicking any node shows its name, a short description (e.g. "Delivery 
+  Time — Average days from order to delivery. Strongly influences 
+  customer satisfaction and repeat purchase behavior."), and a list of 
+  "Directly Affects: Customer Ratings, Cart Abandonment Rate, Repeat 
+  Purchase Rate" with small arrow icons
+- Bottom-left legend explaining edge colors (positive/negative) and node 
+  size meaning (influence/connectivity)
+
+SCREEN 2 — SCENARIO SIMULATION SETUP (triggered by "Run New Simulation")
+- Clean form-style layout, NOT the network graph
+- Header: "Configure Scenario" with breadcrumb back to dependency map
+- A set of 4-5 input controls styled as sliders or stepper inputs, each 
+  representing a decision variable, pre-filled with realistic baseline 
+  values and an adjustable delta:
+  - "Product Price Change" — slider from -20% to +20%, default set to 
+    "-10%"
+  - "Delivery Time Change" — slider from -3 days to +3 days, default set 
+    to "-1 day"
+  - "Marketing Spend Change" — slider from -30% to +50%, default set to 
+    "+15%"
+  - "Inventory Buffer Change" — slider from -25% to +25%, default set to 
+    "0%"
+- A "Time Horizon" selector (pill buttons): "30 days" / "90 days" / 
+  "180 days" — default "90 days" selected
+- A prominent "Run Simulation" button at the bottom
+- On click: show a 2-second loading state styled like a "running 
+  simulation" process — animated text cycling through phases: "Mapping 
+  causal pathways..." → "Running scenario projections..." → "Detecting 
+  anomalies..." (each phase visible for ~0.6-0.7 seconds) with a 
+  progress bar filling
+
+SCREEN 3 — SIMULATION RESULTS (the core "wow" screen)
+- Header: "Scenario Results — Price -10%, Delivery -1 day, Marketing +15%" 
+  with the time horizon shown, and a "Save Scenario" / "Compare" button 
+  pair (visual only)
+- Top section: 4 KPI summary cards in a row, each showing a metric name, 
+  a large projected value, and a small trend arrow + percentage change 
+  vs. baseline, color-coded (green for favorable, amber/red for 
+  unfavorable):
+  - "Projected Order Volume" — large value with "+18%" green
+  - "Projected Customer Rating" — value with "+0.3 ★" green  
+  - "Projected Return Rate" — value with "+6%" amber (flagged as a 
+    tradeoff, not purely positive)
+  - "Projected Platform Revenue" — value with "+12%" green
+- Middle section: a ripple-propagation visualization — a horizontal 
+  timeline/cascade diagram showing the decision rippling outward in 
+  stages (Stage 1: Direct Effects → Stage 2: Secondary Effects → Stage 3: 
+  Downstream Effects), with small animated cards appearing in sequence 
+  under each stage (use Framer Motion stagger animation), e.g.:
+  - Stage 1: "Price drops 10%" 
+  - Stage 2: "Order volume rises, Inventory depletes faster"
+  - Stage 3: "Restocking delays increase, Delivery time partially offsets 
+    initial improvement, Customer ratings gain is smaller than expected"
+- Bottom section: a Recharts line chart showing a 90-day forecast with 
+  TWO lines — "Baseline (no change)" in gray and "Projected (with 
+  changes)" in cyan — for the metric "Platform Revenue," with a 
+  shaded confidence-interval band around the projected line
+
+SCREEN 4 — ANOMALY & UNINTENDED CONSEQUENCE DETECTION (insight panel)
+- Header: "Detected Risks & Hidden Dependencies" with a subtitle: 
+  "Effects beyond the obvious outcome"
+- A list of 3-4 "insight cards," each styled with a severity-colored left 
+  border (red for high-risk, amber for moderate) containing:
+  - An icon (warning triangle for high, info circle for moderate)
+  - A headline insight, e.g.: "Inventory depletion risk: Faster delivery 
+    promise combined with +18% order volume may cause 23% of SKUs to 
+    stock out within 45 days, reversing the rating gain"
+  - A short "Why this matters" line: "This is a second-order effect not 
+    visible in direct price-to-revenue analysis"
+  - A small inline mini-chart or dependency snippet (2-3 connected nodes) 
+    showing the specific causal chain that produces this risk, e.g. 
+    "Order Volume → Inventory Depletion → Delivery Delay → Rating Drop"
+  - A "Suggested Mitigation" line in a subtle highlighted box: "Increase 
+    inventory buffer by 15% for top-selling SKUs before implementing 
+    price change"
+- One card should specifically demonstrate a feedback loop (a cycle, not 
+  a one-way chain): e.g. "Return Rate → Seller Performance Score → 
+  Reduced Marketplace Visibility → Lower Order Volume → Seller Lowers 
+  Price Further → Return Rate Increases" shown as a small circular/loop 
+  diagram rather than a straight chain
+
+NAVIGATION FLOW
+Screen 1 (dependency map) → "Run New Simulation" button → Screen 2 
+(scenario setup) → "Run Simulation" → Screen 3 (results, shown after 
+loading animation) → a "View Detected Risks" button/tab → Screen 4 
+(anomaly detection) → a nav tab/back button returns to Screen 1
+
+WHAT NOT TO BUILD
+- No real causal inference engine, no real structural equation modeling, 
+  no real Monte Carlo simulation — all numbers are pre-written mock 
+  values styled to look computed
+- No CSV upload, no real Olist dataset integration, no real backend or 
+  database of any kind
+- No user accounts, login, or multi-user features
+- No additional business model dropdowns beyond the single "E-Commerce 
+  Marketplace" option shown (visual only, non-functional)
+- No admin panel or settings screens
+
+OUTPUT EXPECTATIONS
+- One component per screen, shared components extracted separately 
+  (NetworkGraph, KPICard, InsightCard, RippleStage, ScenarioSlider)
+- All mock data (node/edge definitions, KPI values, insight text) in a 
+  single mockData.ts file for easy editing before screenshots are taken
+- Visual polish and the network graph's visual credibility are the top 
+  priority — this is the screen judges will scrutinize most closely, so 
+  ensure node/edge rendering looks intentional and readable, not like a 
+  generic force-directed graph demo

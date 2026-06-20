@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Tarang – Strategic Foresight Engine"
+version = "1.0.0"
+id = "artifacts/tarang"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21360
+
+[services.development]
+run = "pnpm --filter @workspace/tarang run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tarang", "run", "build" ]
+publicDir = "artifacts/tarang/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21360"
+BASE_PATH = "/"

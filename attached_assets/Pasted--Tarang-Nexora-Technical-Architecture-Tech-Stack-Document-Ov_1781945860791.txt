@@ -1,0 +1,526 @@
+# Tarang-Nexora – Technical Architecture & Tech Stack Document
+
+## Overview
+
+Tarang-Nexora is an advanced Strategic Foresight and Consequence Modeling Platform that helps e-commerce businesses understand the ripple effects of decisions such as price changes, inventory adjustments, and marketing spend modifications.
+
+The system combines machine learning, simulation modeling, dependency mapping, and interactive visual analytics.
+
+---
+
+# Architecture Overview
+
+Frontend (React)
+↓
+REST API (FastAPI)
+↓
+ML Engine (Scikit-Learn/XGBoost)
+↓
+Data Processing Layer (Pandas)
+↓
+PostgreSQL Database
+↓
+Olist E-Commerce Dataset
+
+---
+
+# Frontend Stack
+
+## Framework
+
+React.js
+
+Why:
+
+* Fast development
+* Huge ecosystem
+* Easy integration with APIs
+* Excellent visualization support
+
+---
+
+## Build Tool
+
+Vite
+
+Why:
+
+* Faster than CRA
+* Better developer experience
+* Industry standard for modern React apps
+
+---
+
+## Styling
+
+Tailwind CSS
+
+Why:
+
+* Rapid UI development
+* Consistent design system
+* Easy responsiveness
+
+---
+
+## UI Components
+
+shadcn/ui
+
+Why:
+
+* Modern design
+* Professional dashboard appearance
+* Production-quality components
+
+Components Used:
+
+* Cards
+* Tables
+* Dialogs
+* Tabs
+* Alerts
+* Charts
+
+---
+
+## Data Visualization
+
+Recharts
+
+Used For:
+
+* Revenue trends
+* Forecast graphs
+* Sales analysis
+* Risk distributions
+
+---
+
+## Dependency Graph Visualization
+
+React Flow
+
+Used For:
+
+* Causal relationship mapping
+* Variable dependency visualization
+* Ripple-effect network diagrams
+
+Example:
+
+Price
+↓
+Sales
+↓
+Inventory
+↓
+Delivery Time
+↓
+Ratings
+
+---
+
+# Backend Stack
+
+## API Framework
+
+FastAPI
+
+Why:
+
+* Extremely fast
+* Python-native
+* Easy ML integration
+* Auto-generated API docs
+
+Responsibilities:
+
+* Data serving
+* Simulation requests
+* Forecast generation
+* Risk analysis
+
+---
+
+## Data Processing
+
+Pandas
+
+Responsibilities:
+
+* Data cleaning
+* Feature engineering
+* Aggregations
+* Dataset transformation
+
+---
+
+## Numerical Computation
+
+NumPy
+
+Responsibilities:
+
+* Statistical calculations
+* Simulation support
+* Probability calculations
+
+---
+
+# Machine Learning Stack
+
+## Core Library
+
+Scikit-Learn
+
+Models:
+
+* Random Forest Regressor
+* Gradient Boosting
+* Linear Regression
+* Isolation Forest
+
+Use Cases:
+
+* Sales prediction
+* Rating prediction
+* Delivery estimation
+* Risk detection
+
+---
+
+## Advanced Prediction
+
+XGBoost
+
+Use Cases:
+
+* Revenue forecasting
+* Business impact prediction
+* Feature importance analysis
+
+Reason:
+
+* Better accuracy
+* Faster training
+* Handles tabular data exceptionally well
+
+---
+
+# Simulation Engine
+
+## Monte Carlo Simulation
+
+Purpose:
+Generate multiple future scenarios and uncertainty estimates.
+
+Example:
+
+Input:
+Price Reduction = 20%
+
+Simulation:
+1000 Runs
+
+Outputs:
+
+* Best Case
+* Expected Case
+* Worst Case
+
+Libraries:
+
+* NumPy
+* Pandas
+
+---
+
+# Dependency Mapping Engine
+
+## Correlation Analysis
+
+Libraries:
+
+* Pandas
+* NumPy
+
+Purpose:
+Identify relationships between variables.
+
+Example:
+
+Price ↔ Sales
+Delivery Time ↔ Rating
+Freight Cost ↔ Customer Satisfaction
+
+---
+
+## Causal Graph Construction
+
+Frontend:
+React Flow
+
+Backend:
+NetworkX
+
+Purpose:
+Create interactive business dependency networks.
+
+---
+
+# Database
+
+## PostgreSQL
+
+Stores:
+
+* Processed datasets
+* Forecast results
+* Simulation history
+* User scenarios
+
+Why:
+
+* Reliable
+* Scalable
+* Easy FastAPI integration
+
+---
+
+# Data Pipeline
+
+Step 1:
+Load Olist Dataset
+
+Step 2:
+Clean Missing Values
+
+Step 3:
+Feature Engineering
+
+Generated Features:
+
+* Average Delivery Time
+* Revenue Per Order
+* Review Score
+* Order Frequency
+* Freight Ratio
+* Customer Retention Score
+
+Step 4:
+Train Models
+
+Step 5:
+Store Predictions
+
+Step 6:
+Serve Through APIs
+
+---
+
+# API Endpoints
+
+## Dashboard
+
+GET /api/dashboard
+
+Returns:
+
+* Revenue
+* Orders
+* Ratings
+* Delivery Metrics
+
+---
+
+## Forecast
+
+POST /api/forecast
+
+Input:
+
+{
+"price_change": -15
+}
+
+Output:
+
+{
+"expected_sales": 12500,
+"expected_revenue": 95000
+}
+
+---
+
+## Scenario Simulation
+
+POST /api/simulate
+
+Input:
+
+{
+"price_change": -20,
+"marketing_change": 10
+}
+
+Output:
+
+{
+"sales_growth": 18,
+"inventory_risk": 72,
+"rating_change": -0.3
+}
+
+---
+
+## Dependency Graph
+
+GET /api/dependencies
+
+Returns:
+Nodes and edges for React Flow visualization.
+
+---
+
+## Risk Analysis
+
+POST /api/risk-analysis
+
+Returns:
+
+* Operational Risk
+* Revenue Risk
+* Inventory Risk
+* Customer Satisfaction Risk
+
+---
+
+# Deployment
+
+Frontend
+
+Vercel
+
+Why:
+
+* One-click React deployment
+* Fast global CDN
+
+---
+
+## Backend
+
+Render
+
+Why:
+
+* Easy FastAPI deployment
+* Free hackathon-friendly tier
+
+---
+
+## Database
+
+Neon PostgreSQL
+
+Why:
+
+* Serverless PostgreSQL
+* Easy integration
+* Free tier
+
+---
+
+# Project Folder Structure
+
+frontend/
+│
+├── pages/
+├── components/
+├── charts/
+├── services/
+├── hooks/
+└── utils/
+
+backend/
+│
+├── api/
+├── models/
+├── simulations/
+├── forecasting/
+├── preprocessing/
+├── datasets/
+└── utils/
+
+ml/
+│
+├── training/
+├── saved_models/
+├── feature_engineering/
+└── evaluation/
+
+database/
+│
+├── schema.sql
+└── migrations/
+
+---
+
+# Stretch Goals
+
+* Algorithmic business insights
+* Natural language scenario creation
+* Model-driven strategic recommendations
+* Real-time data ingestion
+* Multi-industry support
+* Exportable PDF reports
+
+---
+
+# Final Tech Stack Summary
+
+Frontend:
+
+* React
+* Vite
+* Tailwind CSS
+* shadcn/ui
+* Recharts
+* React Flow
+
+Backend:
+
+* FastAPI
+
+Machine Learning:
+
+* Scikit-Learn
+* XGBoost
+* Pandas
+* NumPy
+
+Graph Modeling:
+
+* NetworkX
+
+Database:
+
+* PostgreSQL (Neon)
+
+Deployment:
+
+* Vercel
+* Render
+
+Dataset:
+
+* Olist Brazilian E-Commerce Dataset
+
+Core Technologies:
+
+* Forecasting
+* Monte Carlo Simulation
+* Dependency Mapping
+* Risk Detection
+* Strategic Decision Intelligence
